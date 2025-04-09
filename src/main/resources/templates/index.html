@@ -15,6 +15,15 @@
         <label>단어: <input type="text" th:field="*{word}"></label>
         <button>추가</button>
     </form>
-    <h2 th:text="${words}"></h2>
+<!--    <h2 th:text="${words}"></h2>-->
+    <section>
+        <ul>
+<!--            <li th:each="word : ${words}" th:text="${word}">-->
+            <li th:each="word : ${words}">
+                <span th:text="${word.getText()}"></span>
+                <span th:text="${word.getCreateAt()}"></span>
+            </li>
+        </ul>
+    </section>
 </body>
 </html>
