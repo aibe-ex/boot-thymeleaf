@@ -6,10 +6,15 @@
 <body>
 <!--    <p th:text="${param.message}"></p>-->
     <p th:text="${message}"></p>
-    <form action="reset" method="post">
+    <form th:action="@{/reset}" method="post">
         <button>리셋하기</button>
     </form>
-    <h1>안녕!</h1>
+    <h1>안녕! 끝말잇기 하자!</h1>
+    <!--  여기서의 th:object는 controller에서 model을 통해서 전달 받아야함  -->
+    <form th:action="@{/word}" th:object="${wordForm}" method="post">
+        <label>단어: <input type="text" th:field="*{word}"></label>
+        <button>추가</button>
+    </form>
     <h2 th:text="${words}"></h2>
 </body>
 </html>
