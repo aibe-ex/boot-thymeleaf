@@ -1,10 +1,12 @@
 package org.example.bootthymeleaf.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.example.bootthymeleaf.model.dto.UpdateWordForm;
 import org.example.bootthymeleaf.model.dto.WordForm;
 import org.example.bootthymeleaf.model.entity.Word;
 import org.example.bootthymeleaf.model.repository.WordRepository;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -51,6 +53,21 @@ public class MainController {
         Word word = new Word();
         word.setText(wordForm.getWord());
         wordRepository.save(word);
+        return "redirect:/";
+    }
+
+    @PostMapping("/update")
+    public String updateWord(UpdateWordForm updateWordForm, RedirectAttributes redirectAttributes) {
+        // JPA는 업데이트용 메서드나 기능이 따로 없음
+        // -> 교체개념 => put <-> patch : 멱등성
+//        Word word = new Word();
+//        word.setText(updateWordForm.getNewWord());
+//        word.setUuid(updateWordForm.getUuid());
+        Word oldWord = wordRepository.findById(updateWordForm.getUuid()).orElseThrow(); // 없으면 에러 처리 -> null로 인한 이슈를 에러로 처리
+        oldWord.setText(updateWordForm.getNewWord());
+        wordRepository.save(oldWord);
+        redirectAttributes.addFlashAttribute("message", "정상적으로 교체되었습니다. %s".formatted(oldWord.getUuid()));
+
         return "redirect:/";
     }
 
