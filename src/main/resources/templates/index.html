@@ -21,7 +21,7 @@
 <!--            <li th:each="word : ${words}" th:text="${word}">-->
             <li th:each="word : ${words}">
                 <span th:text="${word.getText()}"></span>
-                <span th:text="${word.getCreateAt()}"></span>
+                <span th:text="${word.getCreatedAt()}"></span>
             </li>
         </ul>
     </section>

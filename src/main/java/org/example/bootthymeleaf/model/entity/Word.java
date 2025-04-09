@@ -14,6 +14,6 @@ public class Word {
     @Column(nullable = false, length = 3)
     private String text;
     @CreationTimestamp
-    private LocalDateTime createAt;
+    private LocalDateTime createdAt;
 
 }

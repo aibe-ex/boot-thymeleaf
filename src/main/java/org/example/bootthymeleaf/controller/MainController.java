@@ -21,7 +21,23 @@ public class MainController {
 //        Word word = new Word();
 //        word.setText("고양이");
 //        wordRepository.save(word);
-        model.addAttribute("words",wordRepository.findAll());
+//        model.addAttribute("words",wordRepository.findAll());
+        // 정렬
+        // 방법 1. sort (비추천. 간단한 가설 검증)
+//        model.addAttribute("words",
+//                wordRepository.findAll().stream()
+//                .sorted((a, b) -> a.getCreatedAt().compareTo(b.getCreatedAt()))
+                        // 뒤집는 방법 1 : reverse 옵션이 어딘가에.. (권장 안함)
+                        // -> for문을 할 때 뒤부터 세는 for문
+                        // 뒤집는 방법 2 : 파라미터 순서 바꿔 a, b -> b, a
+//                .sorted((b, a) -> a.getCreatedAt().compareTo(b.getCreatedAt()))
+                        // 뒤집는 방법 3 : - 를 붙인다 (boolean이면 not을 하고)
+//                .sorted((a, b) -> -a.getCreatedAt().compareTo(b.getCreatedAt()))
+//                        .toList()); // 오름차순 -> 데이터가 등장하는 방향과 데이터가 커지는 방향이 같을 때
+
+        // 방법 2. 쿼리 같은걸 만들어줘야하는데.. 기준을 createdAt으로 잡아야겠네?
+        model.addAttribute("words", wordRepository.findAllByOrderByCreatedAtDesc());
+
         // 이미 정의된 폼을 쓰려면 model을 통해 전달해야 함
         model.addAttribute("wordForm", new WordForm());
         return "index";
